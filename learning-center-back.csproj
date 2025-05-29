@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>learning_center_back</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="EntityFrameworkCore.CreatedUpdatedDate" Version="8.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.5" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational.Design" Version="1.1.6" />
+        <PackageReference Include="MySql.EntityFrameworkCore" Version="9.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Application\" />
+      <Folder Include="Library\" />
+      <Folder Include="News\Application\" />
+      <Folder Include="News\Domain\" />
+      <Folder Include="News\Infraestructure\" />
+      <Folder Include="News\Presentation\Controllers\" />
+      <Folder Include="Security\Presentation\" />
+      <Folder Include="Security\Presentation\Controllers\" />
+      <Folder Include="Shared\Application\" />
+      <Folder Include="Shared\Presentation\Controllers\" />
+      <Folder Include="Tutorial\Application\CommandServices\" />
+      <Folder Include="Tutorial\Application\QueryServices\" />
+      <Folder Include="Tutorial\Domain\Repositories\" />
+      <Folder Include="Tutorial\Domain\Services\" />
+      <Folder Include="Tutorial\Infraestructure\" />
+      <Folder Include="Tutorial\Presentation\Controllers\" />
+    </ItemGroup>
+
+</Project>
