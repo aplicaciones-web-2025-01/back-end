@@ -1,6 +1,8 @@
-﻿namespace learning_center_back.Security.Domain.Models;
+﻿using learning_center_back.Shared.Domain.Models;
 
-public class Tutorial
+namespace learning_center_back.Security.Domain.Models;
+
+public class Tutorial: BaseEntity
 {
     public string Name { get; set; }
     public string Description { get; set; }
@@ -9,12 +11,5 @@ public class Tutorial
     public List<Category> Categories { get; set; } = new List<Category>();
     
     
-    
-    public int Id { get; set; }
-    public DateTime CreatedDate { get; set; }
-    public DateTime ModifiedDate { get; set; }
-    public int UserId { get; set; }
-    public int UpdatedUserId { get; set; }
-    public bool IsActive { get; set; }
     
 }
