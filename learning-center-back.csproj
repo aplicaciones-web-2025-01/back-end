@@ -8,11 +8,19 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="Tutorial\**" />
+      <Content Remove="Tutorial\**" />
+      <EmbeddedResource Remove="Tutorial\**" />
+      <None Remove="Tutorial\**" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="EntityFrameworkCore.CreatedUpdatedDate" Version="8.0.0" />
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5"/>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.5" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Relational.Design" Version="1.1.6" />
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
         <PackageReference Include="MySql.EntityFrameworkCore" Version="9.0.3" />
     </ItemGroup>
 
@@ -27,12 +35,9 @@
       <Folder Include="Security\Presentation\Controllers\" />
       <Folder Include="Shared\Application\" />
       <Folder Include="Shared\Presentation\Controllers\" />
-      <Folder Include="Tutorial\Application\CommandServices\" />
-      <Folder Include="Tutorial\Application\QueryServices\" />
-      <Folder Include="Tutorial\Domain\Repositories\" />
-      <Folder Include="Tutorial\Domain\Services\" />
-      <Folder Include="Tutorial\Infraestructure\" />
-      <Folder Include="Tutorial\Presentation\Controllers\" />
+      <Folder Include="Tutorials\Domain\Models\Queries\" />
+      <Folder Include="Tutorials\Interfaces\REST\Transform\" />
+      <Folder Include="Tutorials\Interfaces\REST\Resources\" />
     </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace learning_center_back.Shared.Domain.Models;
+﻿namespace learning_center_back.Shared.Domain.Model.Entities;
 
 public class BaseEntity
 {

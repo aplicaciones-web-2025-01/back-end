@@ -1,6 +1,10 @@
 using learning_center_back.Shared.Domain;
 using learning_center_back.Shared.Infraestructure.Persistence.Configuration;
 using learning_center_back.Shared.Infraestructure.Persistence.Repositories;
+using learning_center_back.Tutorial.Application.CommandServices;
+using learning_center_back.Tutorial.Application.QueryServices;
+using learning_center_back.Tutorial.Domain.Services;
+using learning_center_back.Tutorial.Infraestructure;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -43,6 +47,9 @@ else if (builder.Environment.IsProduction())
 
 // Shared Bounded Context Injection Configuration
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IBookQueryService, BookQueryService>();
+builder.Services.AddScoped<IBookCommandService, BookCommandService>();
 
 // News Bounded Context Injection Configuration
 
