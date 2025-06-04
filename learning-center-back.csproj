@@ -35,9 +35,10 @@
       <Folder Include="Security\Presentation\Controllers\" />
       <Folder Include="Shared\Application\" />
       <Folder Include="Shared\Presentation\Controllers\" />
-      <Folder Include="Tutorials\Domain\Models\Queries\" />
+      <Folder Include="Tutorials\Domain\Models\Commands\" />
       <Folder Include="Tutorials\Interfaces\REST\Transform\" />
       <Folder Include="Tutorials\Interfaces\REST\Resources\" />
+      <Folder Include="Tutorials\Interfaces\SOAP\" />
     </ItemGroup>
 
 </Project>

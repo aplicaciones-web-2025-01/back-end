@@ -4,3 +4,10 @@
     {
     }
 }
+
+
+//public clase MyClas{ Name }
+
+
+//MyClas obje = new MyClas("Myname")
+//MyClas.Name = "Myname new"; //error

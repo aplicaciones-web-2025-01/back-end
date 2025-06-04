@@ -19,4 +19,9 @@ public class BookQueryService : IBookQueryService
     {
       return  await _bookRepository.ListAsync();
     }
+
+    public async Task<Book> Handler(GetBookByIdQuery query)
+    {
+        return await _bookRepository.FindByIdAsync(query.BookId);
+    }
 }

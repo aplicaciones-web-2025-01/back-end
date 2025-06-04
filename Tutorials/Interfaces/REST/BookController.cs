@@ -26,14 +26,32 @@ namespace learning_center_back.Tutorials.Interfaces.REST
         {
             var query = new GetAllBooksQuery();
             var result = await   _bookQueryService.Handler(query);
+            
+            if (result.Count() == 0 )  return BadRequest();
+            
             return Ok(result);
         }
 
         // GET api/<BookController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            try
+            {
+                var query = new GetBookByIdQuery(id);
+                
+                if (id  == 0) return BadRequest();
+
+                var result = await _bookQueryService.Handler(query);
+                if (result == null) return NotFound();
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+            }
+
         }
 
         // POST api/<BookController>
