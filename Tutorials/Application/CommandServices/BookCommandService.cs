@@ -3,6 +3,7 @@ using learning_center_back.Shared.Domain;
 using learning_center_back.Shared.Domain.Models.Commands;
 using learning_center_back.Tutorial.Domain.Services;
 using learning_center_back.Tutorials.Domain;
+using learning_center_back.Tutorials.Domain.Models.Commands;
 using learning_center_back.Tutorials.Domain.Models.Entities;
 
 namespace learning_center_back.Tutorials.Application.CommandServices

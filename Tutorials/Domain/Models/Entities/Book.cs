@@ -23,4 +23,6 @@ namespace learning_center_back.Tutorials.Domain.Models.Entities
         public int Points { get; init; }
         public List<Chapter> Chapters { get; } = new();
     }
+    
+    
 }

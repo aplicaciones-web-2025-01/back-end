@@ -26,13 +26,15 @@ namespace learning_center_back.Tutorials.Interfaces.REST
         }
 
         // GET: api/Book
-        [HttpGet]
         public async Task<IActionResult> GetAsync()
         {
             var query = new GetAllBooksQuery();
             var result = await _bookQueryService.Handler(query);
 
-            return result.Any() ? Ok(result) : NotFound("No books found.");
+            if (!result.Any()) return NotFound("No books found.");
+
+            var resources = result.Select(BookResourceFromEntityAssembler.ToResourceFromEntity).ToList();
+            return Ok(resources);
         }
 
         // GET: api/Book/{id}
