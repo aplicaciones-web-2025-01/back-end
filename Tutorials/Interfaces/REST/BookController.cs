@@ -1,7 +1,9 @@
 using learning_center_back.Shared.Domain;
+using learning_center_back.Shared.Domain.Models.Commands;
 using learning_center_back.Tutorial.Domain.Services;
 using learning_center_back.Tutorials.Domain.Models.Commands;
 using learning_center_back.Tutorials.Domain.Models.Entities;
+using learning_center_back.Tutorials.Interfaces.REST.Transform;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -45,7 +47,7 @@ namespace learning_center_back.Tutorials.Interfaces.REST
                 var result = await _bookQueryService.Handler(query);
                 if (result == null) return NotFound();
 
-                return Ok(result);
+                return Ok(BookTransformResources.ToEntites(result));
             }
             catch (Exception ex)
             {
@@ -56,8 +58,11 @@ namespace learning_center_back.Tutorials.Interfaces.REST
 
         // POST api/<BookController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] CreateBookCommand command)
         {
+            await   _bookCommandService.Handler(command);
+            
+            return Created();
         }
 
         // PUT api/<BookController>/5
