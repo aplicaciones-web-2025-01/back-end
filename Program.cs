@@ -1,10 +1,11 @@
 using learning_center_back.Shared.Domain;
-using learning_center_back.Shared.Infraestructure.Persistence.Configuration;
 using learning_center_back.Shared.Infraestructure.Persistence.Repositories;
-using learning_center_back.Tutorial.Application.CommandServices;
-using learning_center_back.Tutorial.Application.QueryServices;
+using learning_center_back.Shared.Infrastructure.Persistence.Configuration;
 using learning_center_back.Tutorial.Domain.Services;
-using learning_center_back.Tutorial.Infraestructure;
+using learning_center_back.Tutorials.Application.CommandServices;
+using learning_center_back.Tutorials.Application.QueryServices;
+using learning_center_back.Tutorials.Domain;
+using learning_center_back.Tutorials.Infraestructure;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

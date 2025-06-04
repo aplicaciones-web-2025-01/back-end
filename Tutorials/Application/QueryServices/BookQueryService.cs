@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using learning_center_back.Shared.Domain;
+﻿using learning_center_back.Shared.Domain;
 using learning_center_back.Tutorial.Domain.Services;
+using learning_center_back.Tutorials.Domain;
 using learning_center_back.Tutorials.Domain.Models.Commands;
 using learning_center_back.Tutorials.Domain.Models.Entities;
 
-namespace learning_center_back.Tutorial.Application.QueryServices
+namespace learning_center_back.Tutorials.Application.QueryServices
 {
     public class BookQueryService : IBookQueryService
     {

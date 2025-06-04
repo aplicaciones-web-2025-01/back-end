@@ -1,5 +1,5 @@
 ﻿using learning_center_back.Shared.Domain;
-using learning_center_back.Shared.Infraestructure.Persistence.Configuration;
+using learning_center_back.Shared.Infrastructure.Persistence.Configuration;
 
 namespace learning_center_back.Shared.Infraestructure.Persistence.Repositories;
 

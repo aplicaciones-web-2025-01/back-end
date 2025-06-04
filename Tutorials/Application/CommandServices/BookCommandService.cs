@@ -1,13 +1,11 @@
-﻿using System;
-using System.Data;
-using System.Threading.Tasks;
-using System.Linq;
+﻿using System.Data;
 using learning_center_back.Shared.Domain;
 using learning_center_back.Shared.Domain.Models.Commands;
 using learning_center_back.Tutorial.Domain.Services;
+using learning_center_back.Tutorials.Domain;
 using learning_center_back.Tutorials.Domain.Models.Entities;
 
-namespace learning_center_back.Tutorial.Application.CommandServices
+namespace learning_center_back.Tutorials.Application.CommandServices
 {
     public class BookCommandService(IBookRepository bookRepository, IUnitOfWork unitOfWork) : IBookCommandService
     {
@@ -22,7 +20,10 @@ namespace learning_center_back.Tutorial.Application.CommandServices
             if (books.Any(book => book.Name == command.Name))
                 throw new DuplicateNameException($"A book with the name '{command.Name}' already exists.");
 
-            var book = new Book(command.Name, command.Description, command.PublishDate, command.Points);
+            var book = new Book(command.Name, command.Description, command.PublishDate, command.Points)
+            {
+                UserId = 1
+            };
             await _bookRepository.AddAsync(book);
             await _unitOfWork.CompleteAsync();
 

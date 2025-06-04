@@ -1,34 +1,51 @@
 ﻿using learning_center_back.Tutorials.Domain.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace learning_center_back.Shared.Infraestructure.Persistence.Configuration;
-
-public class LearningCenterContext(DbContextOptions options) : DbContext(options)
+namespace learning_center_back.Shared.Infrastructure.Persistence.Configuration
 {
-    public DbSet<Book> Books { get; set; }
-    public DbSet<Category> Categories { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder builder)
+    public class LearningCenterContext(DbContextOptions options) : DbContext(options)
     {
-        base.OnConfiguring(builder);
-    }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder builder)
-    {
-        base.OnModelCreating(builder);
-
-        builder.Entity<Book>(entity =>
+        protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            entity.HasKey(c => c.Id);
-            entity.Property(c => c.Name).IsRequired().HasMaxLength(100);
-            entity.Property(c => c.Description).IsRequired();
-        });
+            base.OnConfiguring(builder);
+        }
 
-        builder.Entity<Category>(entity =>
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            entity.HasOne(c => c.Book)
-                .WithMany(t => t.Categories)
-                .HasForeignKey(c => c.TutorialId);
-        });
+            base.OnModelCreating(builder);
+
+            // Book Entity Configuration
+            builder.Entity<Book>(entity =>
+            {
+                entity.ToTable("Books");
+                entity.HasKey(c => c.Id);
+
+                entity.Property(c => c.Name)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(c => c.Description)
+                    .IsRequired()
+                    .HasMaxLength(500);
+
+                entity.HasIndex(c => c.Name)
+                    .IsUnique(); // Ensures uniqueness
+            });
+
+            // Category Entity Configuration
+            builder.Entity<Category>(entity =>
+            {
+                entity.ToTable("Categories");
+                entity.HasKey(c => c.Id);
+
+                entity.Property(c => c.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+            });
+        }
     }
 }

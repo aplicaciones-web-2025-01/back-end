@@ -8,19 +8,19 @@ namespace learning_center_back.Tutorials.Domain.Models.Entities
     {
         public Book(string name, string description, DateTime publishDate, int points)
         {
-            Name = name ;
-            Description = description ;
+            Name = name;
+            Description = description;
             PublishDate = publishDate;
             Points = points;
             IsActive = true;
             CreatedDate = DateTime.UtcNow;
-            Categories = new List<Category>();
+            Chapters = new List<Chapter>();
         }
 
         public string Name { get; init; }
         public string Description { get; init; }
         public DateTime PublishDate { get; init; }
         public int Points { get; init; }
-        public List<Category> Categories { get; } = new List<Category>();
+        public List<Chapter> Chapters { get; } = new();
     }
 }

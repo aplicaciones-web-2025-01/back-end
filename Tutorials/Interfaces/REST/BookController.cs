@@ -46,7 +46,7 @@ namespace learning_center_back.Tutorials.Interfaces.REST
                 var query = new GetBookByIdQuery(id);
                 var result = await _bookQueryService.Handler(query);
 
-                return result != null ? Ok(BookTransformResources.ToEntities(result)) : NotFound($"Book with ID {id} not found.");
+                return result != null ? Ok(BookResourceFromEntityAssembler.ToResourceFromEntity(result)) : NotFound($"Book with ID {id} not found.");
             }
             catch (Exception ex)
             {
