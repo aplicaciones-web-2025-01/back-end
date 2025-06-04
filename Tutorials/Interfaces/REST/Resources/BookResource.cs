@@ -2,7 +2,7 @@
 
 public record BookResource
 {
-    public BookResource(int id, string name, string description,DateTime publicationDate,int points)
+    public BookResource(int id, string name, string description, DateTime publicationDate, int points)
     {
         Id = id;
         Name = name;
@@ -10,7 +10,7 @@ public record BookResource
         PublishDate = publicationDate;
         Points = points;
     }
-    
+
     public int Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }

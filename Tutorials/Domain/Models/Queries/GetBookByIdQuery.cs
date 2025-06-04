@@ -6,7 +6,7 @@
         {
             BookId = bookId;
         }
-        
+
         public int BookId { get; init; }
     }
 }

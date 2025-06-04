@@ -6,7 +6,7 @@ using learning_center_back.Tutorials.Domain.Models.Entities;
 
 namespace learning_center_back.Tutorial.Infraestructure;
 
-public class BookRepository(LearningCenterContext context) : BaseRepository<Book>(context) ,IBookRepository
+public class BookRepository(LearningCenterContext context) : BaseRepository<Book>(context), IBookRepository
 {
-    
+
 }

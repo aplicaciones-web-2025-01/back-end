@@ -2,7 +2,7 @@
 
 namespace learning_center_back.Shared.Domain;
 
-public interface IBookRepository  : IBaseRepository<Book>
+public interface IBookRepository : IBaseRepository<Book>
 {
-    
+
 }

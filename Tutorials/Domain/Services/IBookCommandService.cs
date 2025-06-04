@@ -6,4 +6,5 @@ namespace learning_center_back.Tutorial.Domain.Services;
 public interface IBookCommandService
 {
     Task<Book> Handler(CreateBookCommand command);
+    Task<bool> Handler(DeleteBookCommand command);
 }
