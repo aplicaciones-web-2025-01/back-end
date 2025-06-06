@@ -17,12 +17,12 @@ namespace learning_center_back.Tutorials.Domain.Models.Entities
             Chapters = new List<Chapter>();
         }
 
-        public string Name { get; init; }
-        public string Description { get; init; }
-        public DateTime PublishDate { get; init; }
-        public int Points { get; init; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public DateTime PublishDate { get; set; }
+        public int Points { get; set; }
         public List<Chapter> Chapters { get; } = new();
     }
-    
-    
+
+
 }

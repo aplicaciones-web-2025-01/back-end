@@ -11,6 +11,6 @@ public class BookRepository(LearningCenterContext context) : BaseRepository<Book
 {
     public async Task<Book?> GetByNameAsync(string name)
     {
-      return await  context.Set<Book>().FirstOrDefaultAsync(book => book.Name == name);
+        return await context.Set<Book>().FirstOrDefaultAsync(book => book.Name == name);
     }
 }

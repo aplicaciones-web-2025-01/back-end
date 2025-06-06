@@ -79,9 +79,17 @@ namespace learning_center_back.Tutorials.Interfaces.REST
 
         // PUT: api/Book/{id}
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> Put(int id, [FromBody] string command)
+        public async Task<IActionResult> Put(int id, [FromBody] UpdateBookCommand UpdateBookCommand)
         {
-            return Ok();
+            try
+            {
+                _bookCommandService.Handle(UpdateBookCommand, id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return Problem(detail: ex.Message, statusCode: StatusCodes.Status500InternalServerError);
+            }
         }
 
         // DELETE: api/Book/{id}

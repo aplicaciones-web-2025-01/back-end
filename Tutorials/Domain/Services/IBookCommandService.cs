@@ -8,4 +8,5 @@ public interface IBookCommandService
 {
     Task<Book> Handle(CreateBookCommand command);
     Task<bool> Handle(DeleteBookCommand command);
+    Task<bool> Handle(UpdateBookCommand command, int id);
 }

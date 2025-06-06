@@ -53,7 +53,7 @@ builder.Services.AddScoped<IBookQueryService, BookQueryService>();
 builder.Services.AddScoped<IBookCommandService, BookCommandService>();
 
 // News Bounded Context Injection Configuration
-
+builder.WebHost.UseUrls("http://localhost:5000");
 
 
 var app = builder.Build();
