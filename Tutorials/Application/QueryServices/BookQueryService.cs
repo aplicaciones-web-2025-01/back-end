@@ -15,13 +15,13 @@ namespace learning_center_back.Tutorials.Application.QueryServices
             _bookRepository = bookRepository ?? throw new ArgumentNullException(nameof(bookRepository));
         }
 
-        public async Task<IEnumerable<Book>> Handler(GetAllBooksQuery query)
+        public async Task<IEnumerable<Book>> Handle(GetAllBooksQuery query)
         {
             var books = await _bookRepository.ListAsync();
             return books?.Where(book => book.IsActive) ?? Enumerable.Empty<Book>();
         }
 
-        public async Task<Book?> Handler(GetBookByIdQuery query)
+        public async Task<Book?> Handle(GetBookByIdQuery query)
         {
             if (query == null) throw new ArgumentNullException(nameof(query));
 

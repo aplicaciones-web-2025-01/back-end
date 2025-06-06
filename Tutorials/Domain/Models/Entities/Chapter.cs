@@ -13,6 +13,8 @@ namespace learning_center_back.Tutorials.Domain.Models.Entities
             Number = number;
             Content = content ?? throw new ArgumentNullException(nameof(content));
             Book = book ?? throw new ArgumentNullException(nameof(book));
+            IsActive = true;
+            CreatedDate = DateTime.UtcNow;
         }
 
         public string Title { get; init; }

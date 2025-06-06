@@ -5,6 +5,6 @@ namespace learning_center_back.Tutorial.Domain.Services;
 
 public interface IBookQueryService
 {
-    Task<IEnumerable<Book>> Handler(GetAllBooksQuery query);
-    Task<Book> Handler(GetBookByIdQuery query);
+    Task<IEnumerable<Book>> Handle(GetAllBooksQuery query);
+    Task<Book> Handle(GetBookByIdQuery query);
 }

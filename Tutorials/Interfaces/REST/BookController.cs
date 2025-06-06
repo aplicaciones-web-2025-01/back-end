@@ -6,30 +6,26 @@ using System.Threading.Tasks;
 using learning_center_back.Shared.Domain.Models.Commands;
 using learning_center_back.Tutorial.Domain.Services;
 using learning_center_back.Tutorials.Domain.Models.Commands;
+using learning_center_back.Tutorials.Domain.Models.Exceptions;
 using learning_center_back.Tutorials.Interfaces.REST.Transform;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace learning_center_back.Tutorials.Interfaces.REST
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
-    public class BookController : ControllerBase
+    public class BookController(IBookQueryService bookQueryService, IBookCommandService bookCommandService)
+        : ControllerBase
     {
-        private readonly IBookQueryService _bookQueryService;
-        private readonly IBookCommandService _bookCommandService;
-
-        public BookController(IBookQueryService bookQueryService, IBookCommandService bookCommandService)
-        {
-            _bookQueryService = bookQueryService ?? throw new ArgumentNullException(nameof(bookQueryService));
-            _bookCommandService = bookCommandService ?? throw new ArgumentNullException(nameof(bookCommandService));
-        }
+        private readonly IBookQueryService _bookQueryService = bookQueryService ?? throw new ArgumentNullException(nameof(bookQueryService));
+        private readonly IBookCommandService _bookCommandService = bookCommandService ?? throw new ArgumentNullException(nameof(bookCommandService));
 
         // GET: api/Book
         public async Task<IActionResult> GetAsync()
         {
             var query = new GetAllBooksQuery();
-            var result = await _bookQueryService.Handler(query);
+            var result = await _bookQueryService.Handle(query);
 
             if (!result.Any()) return NotFound("No books found.");
 
@@ -46,7 +42,7 @@ namespace learning_center_back.Tutorials.Interfaces.REST
             try
             {
                 var query = new GetBookByIdQuery(id);
-                var result = await _bookQueryService.Handler(query);
+                var result = await _bookQueryService.Handle(query);
 
                 return result != null ? Ok(BookResourceFromEntityAssembler.ToResourceFromEntity(result)) : NotFound($"Book with ID {id} not found.");
             }
@@ -64,8 +60,12 @@ namespace learning_center_back.Tutorials.Interfaces.REST
 
             try
             {
-                await _bookCommandService.Handler(command);
+                await _bookCommandService.Handle(command);
                 return StatusCode(StatusCodes.Status201Created);
+            }
+            catch (NotChapterFoundException exception)
+            {
+                return BadRequest(exception.Message);
             }
             catch (DuplicateNameException)
             {
@@ -93,7 +93,7 @@ namespace learning_center_back.Tutorials.Interfaces.REST
             try
             {
                 var command = new DeleteBookCommand(id);
-                await _bookCommandService.Handler(command);
+                await _bookCommandService.Handle(command);
                 return NoContent();
             }
             catch (Exception ex)
