@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation;
 using learning_center_back.Shared.Domain.Models.Commands;
 using learning_center_back.Tutorial.Domain.Services;
 using learning_center_back.Tutorials.Domain.Models.Commands;
@@ -58,10 +59,24 @@ namespace learning_center_back.Tutorials.Interfaces.REST
         {
             if (command == null) return BadRequest("Invalid book data.");
 
+
+            //Error
+            //if ( command.Name != string.Empty)
+            //     return BadRequest("Book name is invalid.");
+
+
             try
             {
                 await _bookCommandService.Handle(command);
                 return StatusCode(StatusCodes.Status201Created);
+            }
+            catch (ValidationException ex)
+            {
+                return UnprocessableEntity(ex.Message);
+            }
+            catch (ArgumentException ex)
+            {
+                return UnprocessableEntity(ex.Message);
             }
             catch (NotChapterFoundException exception)
             {

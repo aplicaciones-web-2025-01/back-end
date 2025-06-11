@@ -22,6 +22,9 @@ namespace learning_center_back.Tutorials.Domain.Models.Entities
         public DateTime PublishDate { get; set; }
         public int Points { get; set; }
         public List<Chapter> Chapters { get; } = new();
+
+        public Category Category { get; set; }
+        public int? CategoryId { get; set; }
     }
 
 

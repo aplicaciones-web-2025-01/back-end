@@ -17,7 +17,8 @@ namespace learning_center_back.Tutorials.Application.QueryServices
 
         public async Task<IEnumerable<Book>> Handle(GetAllBooksQuery query)
         {
-            var books = await _bookRepository.ListAsync();
+            //var books = await _bookRepository.ListAsync();
+            var books = await _bookRepository.GetAllWithChaptersAsync();
             return books?.Where(book => book.IsActive) ?? Enumerable.Empty<Book>();
         }
 

@@ -7,8 +7,13 @@ using learning_center_back.Tutorials.Application.QueryServices;
 using learning_center_back.Tutorials.Domain;
 using learning_center_back.Tutorials.Infraestructure;
 using Microsoft.EntityFrameworkCore;
+using Azure.Monitor.OpenTelemetry.AspNetCore;
+using FluentValidation;
+using learning_center_back.Tutorials.Domain.Models.Validadors;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//builder.Services.AddOpenTelemetry().UseAzureMonitor();
 
 // Add services to the container.
 
@@ -51,6 +56,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IBookQueryService, BookQueryService>();
 builder.Services.AddScoped<IBookCommandService, BookCommandService>();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateBookCommandValidator>();
 
 // News Bounded Context Injection Configuration
 builder.WebHost.UseUrls("http://localhost:5000");

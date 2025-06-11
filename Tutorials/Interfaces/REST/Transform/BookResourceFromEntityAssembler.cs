@@ -7,6 +7,13 @@ public static class BookResourceFromEntityAssembler
 {
     public static BookResource ToResourceFromEntity(Book book)
     {
-        return new BookResource(book.Id, book.Name, book.Description, book.PublishDate, book.Points);
+        List<ChapterResource> chapters = new List<ChapterResource>();
+
+        foreach (var bookChapter in book.Chapters)
+        {
+            chapters.Add(new ChapterResource(bookChapter.Title, bookChapter.Number));
+        }
+
+        return new BookResource(book.Id, book.Name, book.Description, book.PublishDate, book.Points, chapters);
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace learning_center_back.Tutorials.Interfaces.REST.Resources;
 
-public record BookResource(int Id, string Name, string Description, DateTime PublishDate, int Points)
+public record BookResource(int Id, string Name, string Description, DateTime PublishDate, int Points, List<ChapterResource> Chapters)
 {
 }
 
