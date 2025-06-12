@@ -11,12 +11,12 @@ public class BookRepository(LearningCenterContext context) : BaseRepository<Book
 {
     public async Task<Book?> GetByNameAsync(string name)
     {
-        return await context.Set<Book>().FirstOrDefaultAsync(book => book.Name == name);
+        return await Context.Set<Book>().FirstOrDefaultAsync(book => book.Name == name);
     }
 
     public async Task<IEnumerable<Book>> GetAllWithChaptersAsync()
     {
-        return await context.Set<Book>()
+        return await Context.Set<Book>()
             .Include(book => book.Chapters)
             .Include(c => c.Category).ToListAsync();
     }

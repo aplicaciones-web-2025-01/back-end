@@ -25,18 +25,20 @@ namespace learning_center_back.Shared.Infrastructure.Persistence.Configuration
 
                 entity.Property(c => c.Name)
                     .IsRequired()
-                    .HasMaxLength(20);
+                    .HasMaxLength(20)
+                    .HasAnnotation("CheckConstraint", "LEN(Name) > 0"); // Asegura que no esté vacío
 
                 entity.Property(c => c.Description)
                     .IsRequired()
-                    .HasMaxLength(100);
+                    .HasMaxLength(100)
+                    .HasAnnotation("CheckConstraint", "LEN(Description) > 0"); // Asegura que no esté vacío
 
                 entity.HasOne<Category>(c => c.Category);
 
-
                 entity.HasIndex(c => c.Name)
-                    .IsUnique(); // Ensures uniqueness
+                    .IsUnique(); // Asegura que sea único
             });
+
 
             // Category Entity Configuration
             builder.Entity<Category>(entity =>

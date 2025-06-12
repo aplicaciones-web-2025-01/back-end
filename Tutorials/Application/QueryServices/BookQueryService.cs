@@ -6,14 +6,9 @@ using learning_center_back.Tutorials.Domain.Models.Entities;
 
 namespace learning_center_back.Tutorials.Application.QueryServices
 {
-    public class BookQueryService : IBookQueryService
+    public class BookQueryService(IBookRepository bookRepository) : IBookQueryService
     {
-        private readonly IBookRepository _bookRepository;
-
-        public BookQueryService(IBookRepository bookRepository)
-        {
-            _bookRepository = bookRepository ?? throw new ArgumentNullException(nameof(bookRepository));
-        }
+        private readonly IBookRepository _bookRepository = bookRepository ?? throw new ArgumentNullException(nameof(bookRepository));
 
         public async Task<IEnumerable<Book>> Handle(GetAllBooksQuery query)
         {

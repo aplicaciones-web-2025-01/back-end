@@ -24,7 +24,6 @@ builder.Services.AddOpenApi();
 // Add Database Connection
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-
 // Verify Database Connection String
 if (connectionString is null)
     // Stop the application if the connection string is not set.
@@ -61,9 +60,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<CreateBookCommandValidator>
 // News Bounded Context Injection Configuration
 builder.WebHost.UseUrls("http://localhost:5000");
 
-
 var app = builder.Build();
-
 
 // Verify Database Objects are created
 using (var scope = app.Services.CreateScope())
@@ -72,7 +69,6 @@ using (var scope = app.Services.CreateScope())
     var context = services.GetRequiredService<LearningCenterContext>();
     context.Database.EnsureCreated();
 }
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
