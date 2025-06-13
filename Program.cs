@@ -1,3 +1,4 @@
+using System.Reflection;
 using learning_center_back.Shared.Domain;
 using learning_center_back.Shared.Infraestructure.Persistence.Repositories;
 using learning_center_back.Shared.Infrastructure.Persistence.Configuration;
@@ -10,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Azure.Monitor.OpenTelemetry.AspNetCore;
 using FluentValidation;
 using learning_center_back.Tutorials.Domain.Models.Validadors;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,7 +62,40 @@ builder.Services.AddValidatorsFromAssemblyContaining<CreateBookCommandValidator>
 // News Bounded Context Injection Configuration
 builder.WebHost.UseUrls("http://localhost:5000");
 
+
+
+//swagger
+builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Learning Center app",
+        Description = "APIS to handle data for public library in Lima",
+        TermsOfService = new Uri("https://example.com/terms"),
+        Contact = new OpenApiContact
+        {
+            Name = "Naldo ",
+            Email = "naldo@example.com",
+            Url = new Uri("https://example.com/contact")
+        },
+        License = new OpenApiLicense
+        {
+            Name = "Example License",
+            Url = new Uri("https://example.com/license")
+        }
+    });
+    
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+});
+
 var app = builder.Build();
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 // Verify Database Objects are created
 using (var scope = app.Services.CreateScope())

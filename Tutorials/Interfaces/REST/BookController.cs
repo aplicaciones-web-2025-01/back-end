@@ -21,6 +21,9 @@ namespace learning_center_back.Tutorials.Interfaces.REST
         private readonly IBookQueryService _bookQueryService = bookQueryService;
         private readonly IBookCommandService _bookCommandService = bookCommandService;
 
+        /// <summary>
+        /// Obtain all active the books in th system with chapters whithout filters.
+        /// </summary>
         // GET: api/Book
         [HttpGet]
         public async Task<IActionResult> GetAsync()
@@ -28,7 +31,11 @@ namespace learning_center_back.Tutorials.Interfaces.REST
             var result = await _bookQueryService.Handle(new GetAllBooksQuery());
             return result.Any() ? Ok(result.Select(BookResourceFromEntityAssembler.ToResourceFromEntity)) : NotFound("No books found.");
         }
-
+        
+        /// <summary>
+        /// Obtain active the book with its chapters based filter by id.
+        /// </summary>
+        /// <param name="id"></param>
         // GET: api/Book/{id}
         [HttpGet("{id:int}")]
         public async Task<IActionResult> Get(int id)
@@ -39,6 +46,19 @@ namespace learning_center_back.Tutorials.Interfaces.REST
             return result != null ? Ok(BookResourceFromEntityAssembler.ToResourceFromEntity(result)) : NotFound($"Book with ID {id} not found.");
         }
 
+        
+        
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /api/v1/Book
+        ///     {
+        ///        "id": 1,
+        ///        "name": "Item #1",
+        ///        "Description": true
+        ///     }
+        ///
+        /// </remarks>
         // POST: api/Book
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateBookCommand command)
@@ -50,11 +70,26 @@ namespace learning_center_back.Tutorials.Interfaces.REST
                 await _bookCommandService.Handle(command);
                 return StatusCode(StatusCodes.Status201Created);
             }
-            catch (ValidationException ex) { return UnprocessableEntity(ex.Message); }
-            catch (ArgumentException ex) { return UnprocessableEntity(ex.Message); }
-            catch (NotChapterFoundException ex) { return BadRequest(ex.Message); }
-            catch (DuplicateNameException) { return Conflict("A book with the same name already exists."); }
-            catch (Exception ex) { return Problem(detail: ex.Message, statusCode: StatusCodes.Status500InternalServerError); }
+            catch (ValidationException ex)
+            {
+                return UnprocessableEntity(ex.Message);
+            }
+            catch (ArgumentException ex)
+            {
+                return UnprocessableEntity(ex.Message);
+            }
+            catch (NotChapterFoundException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (DuplicateNameException)
+            {
+                return Conflict("A book with the same name already exists.");
+            }
+            catch (Exception ex)
+            {
+                return Problem(detail: ex.Message, statusCode: StatusCodes.Status500InternalServerError);
+            }
         }
 
         // PUT: api/Book/{id}
