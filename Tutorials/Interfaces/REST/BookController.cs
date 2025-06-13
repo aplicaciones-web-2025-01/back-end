@@ -16,6 +16,8 @@ namespace learning_center_back.Tutorials.Interfaces.REST
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    [Produces("application/json")]
+
     public class BookController(IBookQueryService bookQueryService, IBookCommandService bookCommandService) : ControllerBase
     {
         private readonly IBookQueryService _bookQueryService = bookQueryService;
@@ -59,11 +61,18 @@ namespace learning_center_back.Tutorials.Interfaces.REST
         ///     }
         ///
         /// </remarks>
+        /// <response code="201">Returns the newly created item</response>
+        /// <response code="400">If the item is null</response>
+        /// <response code="407">The value are not expected</response>
         // POST: api/Book
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status417ExpectationFailed)]
+        
         public async Task<IActionResult> Post([FromBody] CreateBookCommand command)
         {
-            if (string.IsNullOrWhiteSpace(command?.Name)) return BadRequest("Book name cannot be empty.");
+            if (command == null) return BadRequest("Book name cannot be empty.");
 
             try
             {
