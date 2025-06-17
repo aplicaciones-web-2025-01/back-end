@@ -7,6 +7,7 @@ namespace learning_center_back.Shared.Infrastructure.Persistence.Configuration
     {
         public DbSet<Book> Books { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Chapter> Chapters { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
@@ -25,20 +26,39 @@ namespace learning_center_back.Shared.Infrastructure.Persistence.Configuration
 
                 entity.Property(c => c.Name)
                     .IsRequired()
-                    .HasMaxLength(20)
-                    .HasAnnotation("CheckConstraint", "LEN(Name) > 0"); // Asegura que no esté vacío
+                    .HasMaxLength(20);
+                
+                entity.Property(c => c.PublishDate)
+                    .IsRequired()
+                    .HasColumnType("DATETIME");
 
                 entity.Property(c => c.Description)
                     .IsRequired()
-                    .HasMaxLength(100)
-                    .HasAnnotation("CheckConstraint", "LEN(Description) > 0"); // Asegura que no esté vacío
+                    .HasMaxLength(100);
 
-                entity.HasOne<Category>(c => c.Category);
+                entity.Property(c => c.CreatedDate)
+                    .IsRequired()
+                    .HasColumnType("DATETIME");
+
+                entity.Property(c => c.ModifiedDate)
+                    .HasColumnType("DATETIME");
 
                 entity.HasIndex(c => c.Name)
-                    .IsUnique(); // Asegura que sea único
-            });
+                    .IsUnique();
 
+                entity.HasOne(c => c.Category)
+                    .WithMany()
+                    .HasForeignKey(c => c.CategoryId);
+                
+                // Relación corregida con Category
+                entity.Property(c => c.CategoryId) // Asegurar que CategoryId esté mapeado
+                    .IsRequired();
+
+                entity.HasOne(c => c.Category)
+                    .WithMany()
+                    .HasForeignKey(c => c.CategoryId)
+                    .OnDelete(DeleteBehavior.Cascade); // Definir comportamiento de eliminación
+            });
 
             // Category Entity Configuration
             builder.Entity<Category>(entity =>
@@ -50,6 +70,26 @@ namespace learning_center_back.Shared.Infrastructure.Persistence.Configuration
                     .IsRequired()
                     .HasMaxLength(50);
 
+                entity.Property(c => c.CreatedDate)
+                    .IsRequired()
+                    .HasColumnType("DATETIME");
+
+                entity.Property(c => c.ModifiedDate)
+                    .HasColumnType("DATETIME");
+            });
+
+            // Chapter Entity Configuration
+            builder.Entity<Chapter>(entity =>
+            {
+                entity.ToTable("Chapters");
+                entity.HasKey(c => c.Id);
+
+                entity.Property(c => c.CreatedDate)
+                    .IsRequired()
+                    .HasColumnType("DATETIME");
+
+                entity.Property(c => c.ModifiedDate)
+                    .HasColumnType("DATETIME");
             });
         }
     }
