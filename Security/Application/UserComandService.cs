@@ -1,5 +1,6 @@
 ﻿using learning_center_back.Security.Domai_.Comands;
 using learning_center_back.Security.Domai_.Entities;
+using learning_center_back.Security.Domain.Exceptions;
 using learning_center_back.Shared.Application.Commands;
 using learning_center_back.Shared.Application.Commands.Repositories;
 using learning_center_back.Shared.Domain;
@@ -23,7 +24,7 @@ public class UserCommandService : IUserCommandService
     {
         var existingUser = await _userRepository.GetByUsernamelAsync(command.Username);
         if (existingUser != null)
-            throw new Exception("Username already taken");
+            throw new UsernameAlreadyTakenException();
 
         var user = new User
         {
@@ -41,8 +42,9 @@ public class UserCommandService : IUserCommandService
     {
         var user = await _userRepository.GetByUsernamelAsync(command.Username);
         if (user == null || !_encryptService.VerifyPassword(command.Password, user.PasswordHashed))
-            throw new Exception("User or password invalid");
+            throw new InvalidCredentialsException();
 
         return user;
     }
+
 }
