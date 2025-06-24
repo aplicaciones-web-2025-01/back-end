@@ -10,6 +10,10 @@ using learning_center_back.Tutorials.Infraestructure;
 using Microsoft.EntityFrameworkCore;
 using Azure.Monitor.OpenTelemetry.AspNetCore;
 using FluentValidation;
+using learning_center_back.Security.Application;
+using learning_center_back.Security.Infraestrucutre;
+using learning_center_back.Shared.Application.Commands;
+using learning_center_back.Shared.Application.Commands.Repositories;
 using learning_center_back.Tutorials.Domain.Models.Validadors;
 using Microsoft.OpenApi.Models;
 
@@ -57,6 +61,10 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IBookQueryService, BookQueryService>();
 builder.Services.AddScoped<IBookCommandService, BookCommandService>();
+builder.Services.AddScoped<IUserCommandService, UserCommandService>();
+builder.Services.AddScoped<IEncryptService, EncryptService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 builder.Services.AddValidatorsFromAssemblyContaining<CreateBookCommandValidator>();
 
 // News Bounded Context Injection Configuration

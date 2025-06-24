@@ -1,4 +1,5 @@
-﻿using learning_center_back.Tutorials.Domain.Models.Entities;
+﻿using learning_center_back.Security.Domai_.Entities;
+using learning_center_back.Tutorials.Domain.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace learning_center_back.Shared.Infrastructure.Persistence.Configuration
@@ -82,6 +83,20 @@ namespace learning_center_back.Shared.Infrastructure.Persistence.Configuration
             builder.Entity<Chapter>(entity =>
             {
                 entity.ToTable("Chapters");
+                entity.HasKey(c => c.Id);
+
+                entity.Property(c => c.CreatedDate)
+                    .IsRequired()
+                    .HasColumnType("DATETIME");
+
+                entity.Property(c => c.ModifiedDate)
+                    .HasColumnType("DATETIME");
+            });
+            
+            // Chapter Entity Configuration
+            builder.Entity<User>(entity =>
+            {
+                entity.ToTable("User");
                 entity.HasKey(c => c.Id);
 
                 entity.Property(c => c.CreatedDate)
