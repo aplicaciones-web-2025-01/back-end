@@ -28,7 +28,7 @@ namespace learning_center_back.Shared.Infrastructure.Persistence.Configuration
                 entity.Property(c => c.Name)
                     .IsRequired()
                     .HasMaxLength(20);
-                
+
                 entity.Property(c => c.PublishDate)
                     .IsRequired()
                     .HasColumnType("DATETIME");
@@ -50,7 +50,7 @@ namespace learning_center_back.Shared.Infrastructure.Persistence.Configuration
                 entity.HasOne(c => c.Category)
                     .WithMany()
                     .HasForeignKey(c => c.CategoryId);
-                
+
                 // Relación corregida con Category
                 entity.Property(c => c.CategoryId) // Asegurar que CategoryId esté mapeado
                     .IsRequired();
@@ -92,7 +92,7 @@ namespace learning_center_back.Shared.Infrastructure.Persistence.Configuration
                 entity.Property(c => c.ModifiedDate)
                     .HasColumnType("DATETIME");
             });
-            
+
             // Chapter Entity Configuration
             builder.Entity<User>(entity =>
             {

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace learning_center_back.Shared.Infraestructure.Attribute;
 
-public class CustomAuthorizeAttribute   :System.Attribute,IAsyncAuthorizationFilter
+public class CustomAuthorizeAttribute : System.Attribute, IAsyncAuthorizationFilter
 {
     private readonly string[] _roles;
 
@@ -22,5 +22,5 @@ public class CustomAuthorizeAttribute   :System.Attribute,IAsyncAuthorizationFil
             context.Result = new ForbidResult();
         }
     }
-    
+
 }

@@ -14,7 +14,7 @@ public class UserCommandService : IUserCommandService
     private readonly IHashService _hashService;
     private readonly IJwtEncryptService _jwtEncryptService;
 
-    public UserCommandService(IUserRepository userRepository, IUnitOfWork unitOfWork, IHashService hashService,IJwtEncryptService jwtEncryptService)
+    public UserCommandService(IUserRepository userRepository, IUnitOfWork unitOfWork, IHashService hashService, IJwtEncryptService jwtEncryptService)
     {
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
@@ -46,11 +46,11 @@ public class UserCommandService : IUserCommandService
         var user = await _userRepository.GetByUsernamelAsync(command.Username);
         if (user == null || !_hashService.VerifyPassword(command.Password, user.PasswordHashed))
             throw new InvalidCredentialsException();
-        
+
         //coinciden
 
-         var jwtToken=  _jwtEncryptService.Encrypt(user);
-        
+        var jwtToken = _jwtEncryptService.Encrypt(user);
+
 
         return jwtToken;
     }

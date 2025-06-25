@@ -5,6 +5,6 @@ namespace learning_center_back.Shared.Application.Commands;
 
 public interface IUserCommandService
 {
-    Task<User> Handle(SignUpCommand command );
+    Task<User> Handle(SignUpCommand command);
     Task<string> Handle(LoginCommand loginCommand);
 }

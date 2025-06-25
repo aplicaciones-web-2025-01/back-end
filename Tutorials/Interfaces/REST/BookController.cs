@@ -35,7 +35,7 @@ namespace learning_center_back.Tutorials.Interfaces.REST
             var result = await _bookQueryService.Handle(new GetAllBooksQuery());
             return result.Any() ? Ok(result.Select(BookResourceFromEntityAssembler.ToResourceFromEntity)) : NotFound("No books found.");
         }
-        
+
         /// <summary>
         /// Obtain active the book with its chapters based filter by id.
         /// </summary>
@@ -50,8 +50,8 @@ namespace learning_center_back.Tutorials.Interfaces.REST
             return result != null ? Ok(BookResourceFromEntityAssembler.ToResourceFromEntity(result)) : NotFound($"Book with ID {id} not found.");
         }
 
-        
-        
+
+
         /// <remarks>
         /// Sample request:
         ///

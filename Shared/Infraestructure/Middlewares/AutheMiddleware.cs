@@ -5,23 +5,23 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 namespace learning_center_back.Shared.Infraestructure.Middlewares;
 
 public class AutheMiddleware
-{ 
+{
     private readonly RequestDelegate _next;
 
     public AutheMiddleware(RequestDelegate next)
     {
         _next = next;
     }
-    public async Task InvokeAsync(HttpContext context,IJwtEncryptService jwtEncryptService)
+    public async Task InvokeAsync(HttpContext context, IJwtEncryptService jwtEncryptService)
     {
         var allowAnonymous = IsAllowAnonymous(context);
-        
+
         if (allowAnonymous)
         {
             await _next(context);
             return;
         }
-        
+
         var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
 
         if (string.IsNullOrEmpty(token))
@@ -30,9 +30,9 @@ public class AutheMiddleware
             await context.Response.WriteAsync("token is missing");
             return;
         }
-        
+
         var user = jwtEncryptService.Decrypt(token);
-        
+
         context.Items["User"] = user;
 
         await _next(context);

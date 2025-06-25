@@ -12,8 +12,8 @@ public class JwtEncryptService : IJwtEncryptService
 {
 
     private IConfiguration _configuration;
-    private SymmetricSecurityKey  _key; 
-    
+    private SymmetricSecurityKey _key;
+
     public JwtEncryptService(IConfiguration configuration)
     {
         _configuration = configuration;
@@ -28,7 +28,7 @@ public class JwtEncryptService : IJwtEncryptService
             new Claim(ClaimTypes.Name, user.Username),
             new Claim(ClaimTypes.Role, user.Role),
         };
-        
+
         var credentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256);
 
         var tokenDescriptor = new SecurityTokenDescriptor
@@ -37,10 +37,10 @@ public class JwtEncryptService : IJwtEncryptService
             Expires = DateTime.UtcNow.AddHours(4),
             SigningCredentials = credentials
         };
-        
+
         var handler = new JwtSecurityTokenHandler();
         var token = handler.CreateToken(tokenDescriptor);
-        
+
         return handler.WriteToken(token);
     }
 

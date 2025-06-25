@@ -12,6 +12,6 @@ public class UserRepository(LearningCenterContext context) : BaseRepository<User
 {
     public async Task<User?> GetByUsernamelAsync(string username)
     {
-       return  await context.Set<User>().FirstOrDefaultAsync(u => u.Username == username);
+        return await context.Set<User>().FirstOrDefaultAsync(u => u.Username == username);
     }
 }

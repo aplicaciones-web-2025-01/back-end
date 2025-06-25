@@ -97,6 +97,8 @@ builder.Services.AddScoped<IJwtEncryptService, JwtEncryptService>();
 
 // Validators
 builder.Services.AddValidatorsFromAssemblyContaining<CreateBookCommandValidator>();
+//builder.Services.AddHttpsRedirection();
+
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer();
