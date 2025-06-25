@@ -15,6 +15,8 @@ using learning_center_back.Security.Application;
 using learning_center_back.Security.Infraestrucutre;
 using learning_center_back.Shared.Application.Commands;
 using learning_center_back.Shared.Application.Commands.Repositories;
+using learning_center_back.Shared.Infraestructure.Middlewares;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -96,6 +98,9 @@ builder.Services.AddScoped<IJwtEncryptService, JwtEncryptService>();
 // Validators
 builder.Services.AddValidatorsFromAssemblyContaining<CreateBookCommandValidator>();
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer();
+
 var app = builder.Build();
 
 // Swagger UI
@@ -115,6 +120,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+app.UseMiddleware<AutheMiddleware>();
 app.UseHttpsRedirection();
 app.UseCors("AllowAllPolicy");
 app.UseAuthorization();

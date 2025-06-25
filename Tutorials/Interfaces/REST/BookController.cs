@@ -7,17 +7,18 @@ using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using learning_center_back.Shared.Domain.Models.Commands;
+using learning_center_back.Shared.Infraestructure.Attribute;
 using learning_center_back.Tutorial.Domain.Services;
 using learning_center_back.Tutorials.Domain.Models.Commands;
 using learning_center_back.Tutorials.Domain.Models.Exceptions;
 using learning_center_back.Tutorials.Interfaces.REST.Transform;
+using Microsoft.AspNetCore.Authorization;
 
 namespace learning_center_back.Tutorials.Interfaces.REST
 {
     [Route("api/v1/[controller]")]
     [ApiController]
     [Produces("application/json")]
-
     public class BookController(IBookQueryService bookQueryService, IBookCommandService bookCommandService) : ControllerBase
     {
         private readonly IBookQueryService _bookQueryService = bookQueryService;
@@ -28,6 +29,7 @@ namespace learning_center_back.Tutorials.Interfaces.REST
         /// </summary>
         // GET: api/Book
         [HttpGet]
+        [CustomAuthorize("admin,sales")]
         public async Task<IActionResult> GetAsync()
         {
             var result = await _bookQueryService.Handle(new GetAllBooksQuery());
@@ -69,7 +71,7 @@ namespace learning_center_back.Tutorials.Interfaces.REST
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status417ExpectationFailed)]
-        
+        [CustomAuthorize("admin")]
         public async Task<IActionResult> Post([FromBody] CreateBookCommand command)
         {
             if (command == null) return BadRequest("Book name cannot be empty.");
@@ -117,6 +119,7 @@ namespace learning_center_back.Tutorials.Interfaces.REST
 
         // DELETE: api/Book/{id}
         [HttpDelete("{id:int}")]
+        [CustomAuthorize("admin,sales")]
         public async Task<IActionResult> Delete(int id)
         {
             if (id <= 0) return BadRequest("Invalid book ID.");
