@@ -89,8 +89,9 @@ builder.Services.AddScoped<IBookCommandService, BookCommandService>();
 
 // Dependency Injection - Security
 builder.Services.AddScoped<IUserCommandService, UserCommandService>();
-builder.Services.AddScoped<IEncryptService, EncryptService>();
+builder.Services.AddScoped<IHashService, HashService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IJwtEncryptService, JwtEncryptService>();
 
 // Validators
 builder.Services.AddValidatorsFromAssemblyContaining<CreateBookCommandValidator>();

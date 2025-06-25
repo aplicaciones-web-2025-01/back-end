@@ -6,4 +6,6 @@ public class User :BaseEntity
 {
     public String Username { get; set; }
     public String PasswordHashed { get; set; }
+    
+    public String Role { get; set; }
 }

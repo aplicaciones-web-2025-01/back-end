@@ -11,13 +11,15 @@ public class UserCommandService : IUserCommandService
 {
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IEncryptService _encryptService;
+    private readonly IHashService _hashService;
+    private readonly IJwtEncryptService _jwtEncryptService;
 
-    public UserCommandService(IUserRepository userRepository, IUnitOfWork unitOfWork, IEncryptService encryptService)
+    public UserCommandService(IUserRepository userRepository, IUnitOfWork unitOfWork, IHashService hashService,IJwtEncryptService jwtEncryptService)
     {
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
-        _encryptService = encryptService;
+        _hashService = hashService;
+        _jwtEncryptService = jwtEncryptService;
     }
 
     public async Task<User> Handle(SignUpCommand command)
@@ -29,7 +31,8 @@ public class UserCommandService : IUserCommandService
         var user = new User
         {
             Username = command.Username,
-            PasswordHashed = _encryptService.HashPassword(command.Password),
+            PasswordHashed = _hashService.HashPassword(command.Password),
+            Role = command.Role
         };
 
         await _userRepository.AddAsync(user);
@@ -38,13 +41,18 @@ public class UserCommandService : IUserCommandService
         return user;
     }
 
-    public async Task<User> Handle(LoginCommand command)
+    public async Task<string> Handle(LoginCommand command)
     {
         var user = await _userRepository.GetByUsernamelAsync(command.Username);
-        if (user == null || !_encryptService.VerifyPassword(command.Password, user.PasswordHashed))
+        if (user == null || !_hashService.VerifyPassword(command.Password, user.PasswordHashed))
             throw new InvalidCredentialsException();
+        
+        //coinciden
 
-        return user;
+         var jwtToken=  _jwtEncryptService.Encrypt(user);
+        
+
+        return jwtToken;
     }
 
 }

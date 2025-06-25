@@ -1,6 +1,6 @@
 ﻿namespace learning_center_back.Shared.Application.Commands;
 
-public interface IEncryptService
+public interface IHashService
 {
      string HashPassword(string password);
     

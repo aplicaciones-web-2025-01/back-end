@@ -3,7 +3,7 @@ using Org.BouncyCastle.Crypto.Generators;
 
 namespace learning_center_back.Security.Application;
 
-public class EncryptService :IEncryptService
+public class HashService :IHashService
 {
     public string HashPassword(string password)
     {
